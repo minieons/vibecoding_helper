@@ -1,0 +1,42 @@
+# 코딩 규칙
+
+## 네이밍 컨벤션
+- 파일명: {{ naming.file }}
+- 함수/메서드: {{ naming.function }}
+- 클래스: {{ naming.class }}
+- 상수: {{ naming.constant }}
+- 변수: {{ naming.variable }}
+
+## 코드 스타일
+- 최대 줄 길이: {{ style.max_line_length }}
+- 들여쓰기: {{ style.indent }}
+- 문자열: {{ style.quotes }}
+- 패러다임: {{ style.paradigm }}
+
+## 타입
+- 타입 힌트: {{ typing.hints }}
+- strict 모드: {{ typing.strict }}
+
+## 에러 처리
+- 패턴: {{ error.pattern }}
+{% if error.custom_exception %}
+- 커스텀 예외: {{ error.custom_exception }}
+{% endif %}
+
+## Import 규칙
+- 정렬 순서: {{ imports.order }}
+- 그룹핑: {{ imports.groups }}
+
+## 문서화
+- 독스트링: {{ docs.docstring_style }}
+- 주석 언어: {{ docs.language }}
+{% if docs.readme_required %}
+- README 필수: 예
+{% endif %}
+
+{% if extra_rules %}
+## 추가 규칙
+{% for rule in extra_rules %}
+- {{ rule }}
+{% endfor %}
+{% endif %}

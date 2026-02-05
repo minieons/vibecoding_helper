@@ -1,0 +1,39 @@
+# 프로젝트 구조
+
+## 디렉토리 구조
+```
+{{ project_name }}/
+{% for item in tree_structure %}
+{{ item }}
+{% endfor %}
+```
+
+## 파일 설명
+
+| 경로 | 설명 |
+|-----|------|
+{% for file in files %}
+| {{ file.path }} | {{ file.description }} |
+{% endfor %}
+
+## 디렉토리 역할
+
+{% for dir in directories %}
+### {{ dir.path }}
+{{ dir.description }}
+
+{% if dir.files %}
+포함 파일:
+{% for file in dir.files %}
+- `{{ file }}`
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+
+## 의존성 흐름
+```
+{% for dep in dependencies %}
+{{ dep }}
+{% endfor %}
+```

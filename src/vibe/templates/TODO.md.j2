@@ -1,0 +1,51 @@
+# TODO - {{ project_name }} 구현 작업 목록
+
+## Phase 0: 초기화
+- [x] 프로젝트 구조 생성
+- [x] 설정 파일 작성
+
+## Phase 1: 기획
+- [x] PRD 문서 작성
+- [x] User Story 작성
+
+## Phase 2: 설계
+- [x] TREE.md 작성
+- [x] SCHEMA.md 작성
+- [x] 프로젝트 스캐폴딩
+
+## Phase 3: 구현
+
+{% for category in task_categories %}
+### {{ category.name }}
+{% for task in category.tasks %}
+- [ ] {{ task.id }}: {{ task.title }} ({{ task.priority }})
+  - 파일: {{ task.file }}
+{% if task.depends_on %}
+  - 의존: {{ task.depends_on | join(', ') }}
+{% endif %}
+{% if task.description %}
+  - 설명: {{ task.description }}
+{% endif %}
+
+{% endfor %}
+{% endfor %}
+
+---
+
+## 진행 상황
+
+| Phase | 완료 | 전체 | 진행률 |
+|-------|-----|------|--------|
+| Phase 0 | {{ completed.phase0 }} | {{ total.phase0 }} | {{ (completed.phase0 / total.phase0 * 100) | int if total.phase0 else 0 }}% |
+| Phase 1 | {{ completed.phase1 }} | {{ total.phase1 }} | {{ (completed.phase1 / total.phase1 * 100) | int if total.phase1 else 0 }}% |
+| Phase 2 | {{ completed.phase2 }} | {{ total.phase2 }} | {{ (completed.phase2 / total.phase2 * 100) | int if total.phase2 else 0 }}% |
+| Phase 3 | 0 | {{ total.phase3 }} | 0% |
+
+**전체 진행률: {{ completed_total }}/{{ total_all }} ({{ (completed_total / total_all * 100) | int if total_all else 0 }}%)**
+
+---
+
+## 다음 작업 (우선순위)
+{% for task in next_tasks[:5] %}
+{{ loop.index }}. **{{ task.id }}**: {{ task.title }}
+{% endfor %}

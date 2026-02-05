@@ -1,0 +1,65 @@
+# 데이터 스키마
+
+## 데이터 모델
+
+{% for model in models %}
+### Model: {{ model.name }}
+
+{{ model.description }}
+
+| 필드 | 타입 | 설명 | 제약조건 |
+|-----|------|-----|---------|
+{% for field in model.fields %}
+| {{ field.name }} | {{ field.type }} | {{ field.description }} | {{ field.constraints | default('-') }} |
+{% endfor %}
+
+{% if model.relationships %}
+**관계:**
+{% for rel in model.relationships %}
+- {{ rel }}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+
+{% if api_endpoints %}
+## API 스키마
+
+{% for endpoint in api_endpoints %}
+### {{ endpoint.method }} {{ endpoint.path }}
+
+{{ endpoint.description }}
+
+{% if endpoint.request %}
+**Request:**
+```json
+{{ endpoint.request | tojson(indent=2) }}
+```
+{% endif %}
+
+**Response:**
+```json
+{{ endpoint.response | tojson(indent=2) }}
+```
+
+{% if endpoint.errors %}
+**Errors:**
+| 코드 | 설명 |
+|-----|------|
+{% for error in endpoint.errors %}
+| {{ error.code }} | {{ error.description }} |
+{% endfor %}
+{% endif %}
+
+---
+
+{% endfor %}
+{% endif %}
+
+{% if state_diagram %}
+## 상태 다이어그램
+
+```
+{{ state_diagram }}
+```
+{% endif %}

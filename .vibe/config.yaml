@@ -1,0 +1,16 @@
+# Vibe Coding Helper - 프로젝트 설정
+# 생성일: 2026-02-03
+
+project_name: vibe-coding-helper
+project_type: cli
+
+# AI Provider 설정
+provider: anthropic
+model: claude-3-5-sonnet-20241022
+
+# 자동화 설정
+auto_commit: true
+language: ko
+
+# 컨텍스트 관리
+token_budget: 100000

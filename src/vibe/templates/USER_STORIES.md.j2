@@ -1,0 +1,42 @@
+# User Stories
+
+## 형식
+- ID: US-XXX
+- 제목: [사용자]는 [기능]을 [목적]을 위해 원한다
+- 수락 기준 (Acceptance Criteria)
+- 우선순위: Must/Should/Could/Won't
+
+---
+
+## 스토리 목록
+
+{% for story in stories %}
+### {{ story.id }}: {{ story.title }}
+
+**As a** {{ story.user_type }}
+**I want to** {{ story.action }}
+**So that** {{ story.goal }}
+
+**Acceptance Criteria:**
+{% for criteria in story.acceptance_criteria %}
+- [ ] {{ criteria }}
+{% endfor %}
+
+**Priority:** {{ story.priority }}
+
+{% if story.notes %}
+**Notes:** {{ story.notes }}
+{% endif %}
+
+---
+
+{% endfor %}
+
+## 요약
+
+| 우선순위 | 개수 |
+|---------|-----|
+| Must | {{ stories | selectattr('priority', 'equalto', 'Must') | list | length }} |
+| Should | {{ stories | selectattr('priority', 'equalto', 'Should') | list | length }} |
+| Could | {{ stories | selectattr('priority', 'equalto', 'Could') | list | length }} |
+| Won't | {{ stories | selectattr('priority', 'equalto', "Won't") | list | length }} |

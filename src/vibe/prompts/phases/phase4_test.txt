@@ -1,0 +1,134 @@
+## Phase 4: 테스트 (Test)
+
+프로젝트의 품질을 검증하고 테스트를 생성합니다.
+
+### 컨텍스트
+{context}
+
+### 모드: {mode}
+
+---
+
+## 모드별 지침
+
+### audit (전역 감사) - Gemini 담당
+
+전체 코드베이스를 분석하여 다음을 검사하세요:
+
+1. **데이터 흐름 분석**
+   - 입력 → 처리 → 출력 경로 추적
+   - 데이터 변환 지점 식별
+   - 잠재적 데이터 손실 지점
+
+2. **논리적 결함 탐지**
+   - 도달 불가능한 코드
+   - 무한 루프 가능성
+   - 조건문 논리 오류
+
+3. **일관성 검사**
+   - 네이밍 컨벤션 준수 여부
+   - 에러 처리 패턴 일관성
+   - 타입 힌트 완전성
+
+4. **보안 취약점**
+   - 하드코딩된 자격 증명
+   - SQL Injection 가능성
+   - 입력 검증 누락
+
+### 출력 형식 (audit)
+```markdown
+# 감사 리포트
+
+## 요약
+- 검사 파일: N개
+- 발견 이슈: N개 (High: N, Medium: N, Low: N)
+
+## 발견된 이슈
+
+### [HIGH] 이슈 제목
+- 파일: path/to/file.py:123
+- 설명: ...
+- 권장 조치: ...
+
+### [MEDIUM] 이슈 제목
+...
+
+## 통과 항목
+- ✓ 네이밍 컨벤션 준수
+- ✓ 에러 처리 일관성
+...
+```
+
+---
+
+### edge_cases (엣지 케이스 생성) - Claude 담당
+
+사용자 관점에서 엣지 케이스 테스트를 생성하세요:
+
+1. **경계값 테스트**
+   - 빈 입력
+   - 최대/최소 값
+   - 특수 문자
+
+2. **상태 전이 테스트**
+   - 비정상적인 상태 전환
+   - 동시 요청
+   - 타임아웃
+
+3. **에러 시나리오**
+   - 네트워크 실패
+   - 파일 권한 오류
+   - 잘못된 설정
+
+4. **사용자 시나리오**
+   - 실수로 잘못된 입력
+   - 중복 실행
+   - 취소 후 재시도
+
+### 출력 형식 (edge_cases)
+```python
+# tests/test_edge_cases.py
+
+import pytest
+from vibe.core.config import VibeConfig, load_config
+
+class TestConfigEdgeCases:
+    """설정 관련 엣지 케이스."""
+
+    def test_empty_project_name(self):
+        """프로젝트 이름이 빈 문자열일 때."""
+        with pytest.raises(ValidationError):
+            VibeConfig(project_name="")
+
+    def test_invalid_provider(self):
+        """지원하지 않는 Provider 지정 시."""
+        with pytest.raises(ValidationError):
+            VibeConfig(project_name="test", provider="invalid")
+
+    # ... 더 많은 테스트
+```
+
+---
+
+### coverage (커버리지 분석) - 공동
+
+테스트 커버리지를 분석하고 부족한 부분을 식별하세요:
+
+1. 테스트되지 않은 함수/메서드
+2. 분기 커버리지 부족 영역
+3. 우선순위가 높은 테스트 대상
+
+### 출력 형식 (coverage)
+```markdown
+# 커버리지 분석
+
+## 미테스트 영역
+| 파일 | 함수 | 우선순위 | 이유 |
+|-----|-----|---------|-----|
+| config.py | load_config | High | 핵심 기능 |
+| workflow.py | advance_phase | Medium | 상태 변경 |
+
+## 권장 테스트
+1. `test_load_config_with_missing_file`
+2. `test_advance_phase_boundary`
+```

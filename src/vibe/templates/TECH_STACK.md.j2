@@ -1,0 +1,28 @@
+# 기술 스택
+
+## 언어
+- {{ language }} {{ language_version }}
+
+## 프레임워크
+{% for framework in frameworks %}
+- {{ framework.name }} {{ framework.version }}
+{% endfor %}
+
+## 주요 라이브러리
+| 라이브러리 | 버전 | 용도 |
+|-----------|-----|------|
+{% for lib in libraries %}
+| {{ lib.name }} | {{ lib.version }} | {{ lib.purpose }} |
+{% endfor %}
+
+## 개발 도구
+- 패키지 관리자: {{ package_manager }}
+- 린터: {{ linter }}
+- 포맷터: {{ formatter }}
+- 테스트: {{ test_framework }}
+
+## 런타임 환경
+- {{ runtime_name }} 버전: {{ runtime_version }}
+{% if container %}
+- 컨테이너: {{ container }}
+{% endif %}
