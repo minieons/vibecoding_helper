@@ -32,13 +32,6 @@ pip install vibe-coding-helper
 git clone https://github.com/vibe-team/vibe-coding-helper.git
 cd vibe-coding-helper
 
-# uv로 설치 (권장)
-uv pip install -e ".[dev]"
-
-# 또는 pip으로 설치
-pip install -e ".[dev]"
-```
-
 ## 빠른 시작
 
 ### 1. API 키 설정
